@@ -1,0 +1,92 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.ruoyi.system.mapper.ProductTypeRobotCodeMapper">
+
+    <resultMap type="ProductTypeRobotCode" id="ProductTypeRobotCodeResult">
+        <result property="id"    column="id"    />
+        <result property="typeId"    column="type_id"    />
+        <result property="code"    column="code"    />
+        <result property="url"    column="url"    />
+        <result property="createBy"    column="create_by"    />
+        <result property="createTime"    column="create_time"    />
+        <result property="updateBy"    column="update_by"    />
+        <result property="updateTime"    column="update_time"    />
+        <result property="name"    column="name"    />
+        <result property="robotId"    column="robot_id"    />
+        <result property="saying"    column="saying"    />
+    </resultMap>
+
+    <sql id="selectProductTypeRobotCodeVo">
+        select c.id, c.type_id, c.code, c.url, c.create_by, c.create_time,r.name,r.robot_id,r.saying from product_type_robot_code c
+        left join product_type_robot r on r.id=c.type_id
+    </sql>
+
+    <select id="selectProductTypeRobotCodeList" parameterType="ProductTypeRobotCode" resultMap="ProductTypeRobotCodeResult">
+        <include refid="selectProductTypeRobotCodeVo"/>
+        <where>
+            <if test="typeId != null "> and c.type_id = #{typeId}</if>
+            <if test="code != null  and code != ''"> and c.code = #{code}</if>
+            <if test="url != null  and url != ''"> and c.url = #{url}</if>
+        </where>
+    </select>
+
+    <select id="selectProductTypeRobotCodeById" parameterType="Long" resultMap="ProductTypeRobotCodeResult">
+        <include refid="selectProductTypeRobotCodeVo"/>
+        where c.id = #{id}
+    </select>
+
+    <insert id="insertProductTypeRobotCode" parameterType="ProductTypeRobotCode" useGeneratedKeys="true" keyProperty="id">
+        insert into product_type_robot_code
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="typeId != null">type_id,</if>
+            <if test="code != null">code,</if>
+            <if test="url != null">url,</if>
+            <if test="createBy != null">create_by,</if>
+            <if test="createTime != null">create_time,</if>
+            <if test="updateBy != null">update_by,</if>
+            <if test="updateTime != null">update_time,</if>
+         </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="typeId != null">#{typeId},</if>
+            <if test="code != null">#{code},</if>
+            <if test="url != null">#{url},</if>
+            <if test="createBy != null">#{createBy},</if>
+            <if test="createTime != null">#{createTime},</if>
+            <if test="updateBy != null">#{updateBy},</if>
+            <if test="updateTime != null">#{updateTime},</if>
+         </trim>
+    </insert>
+
+    <update id="updateProductTypeRobotCode" parameterType="ProductTypeRobotCode">
+        update product_type_robot_code
+        <trim prefix="SET" suffixOverrides=",">
+            <if test="typeId != null">type_id = #{typeId},</if>
+            <if test="code != null">code = #{code},</if>
+            <if test="url != null">url = #{url},</if>
+            <if test="createBy != null">create_by = #{createBy},</if>
+            <if test="createTime != null">create_time = #{createTime},</if>
+            <if test="updateBy != null">update_by = #{updateBy},</if>
+            <if test="updateTime != null">update_time = #{updateTime},</if>
+        </trim>
+        where id = #{id}
+    </update>
+
+    <delete id="deleteProductTypeRobotCodeById" parameterType="Long">
+        delete from product_type_robot_code where id = #{id}
+    </delete>
+
+    <delete id="deleteProductTypeRobotCodeByIds" parameterType="String">
+        delete from product_type_robot_code where id in
+        <foreach item="id" collection="array" open="(" separator="," close=")">
+            #{id}
+        </foreach>
+    </delete>
+    <insert id="insertProductTypeRobotCodeBatch">
+        insert into product_type_robot_code(type_id, code,url,create_by,create_time) values
+        <foreach item="item" index="index" collection="list" separator=",">
+            (#{item.typeId},#{item.code},#{item.url},#{item.createBy},#{item.createTime})
+        </foreach>
+    </insert>
+</mapper>
