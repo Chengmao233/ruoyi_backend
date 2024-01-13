@@ -1,0 +1,100 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.ruoyi.system.mapper.ProductTypeRobotMapper">
+
+    <resultMap type="ProductTypeRobot" id="ProductTypeRobotResult">
+        <result property="id"    column="id"    />
+        <result property="name"    column="name"    />
+        <result property="type"    column="type"    />
+        <result property="nums"    column="nums"    />
+        <result property="hasNums"    column="has_nums"    />
+        <result property="saying"    column="saying"    />
+        <result property="robotId"    column="robot_id"    />
+        <result property="createBy"    column="create_by"    />
+        <result property="createTime"    column="create_time"    />
+        <result property="updateBy"    column="update_by"    />
+        <result property="updateTime"    column="update_time"    />
+        <result property="url"    column="url"    />
+    </resultMap>
+
+    <sql id="selectProductTypeRobotVo">
+        select id, name, type, url,saying,nums, has_nums, robot_id, create_by, create_time, update_by, update_time from product_type_robot
+    </sql>
+
+    <select id="selectProductTypeRobotList" parameterType="ProductTypeRobot" resultMap="ProductTypeRobotResult">
+        <include refid="selectProductTypeRobotVo"/>
+        <where>
+            <if test="name != null  and name != ''"> and name like concat('%', #{name}, '%')</if>
+            <if test="type != null  and type != ''"> and type = #{type}</if>
+            <if test="nums != null "> and nums = #{nums}</if>
+            <if test="hasNums != null "> and has_nums = #{hasNums}</if>
+            <if test="robotId != null  and robotId != ''"> and robot_id = #{robotId}</if>
+        </where>
+    </select>
+
+    <select id="selectProductTypeRobotById" parameterType="Long" resultMap="ProductTypeRobotResult">
+        <include refid="selectProductTypeRobotVo"/>
+        where id = #{id}
+    </select>
+
+    <insert id="insertProductTypeRobot" parameterType="ProductTypeRobot" useGeneratedKeys="true" keyProperty="id">
+        insert into product_type_robot
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="name != null">name,</if>
+            <if test="type != null">type,</if>
+            <if test="nums != null">nums,</if>
+            <if test="hasNums != null">has_nums,</if>
+            <if test="robotId != null">robot_id,</if>
+            <if test="saying != null">saying,</if>
+            <if test="createBy != null">create_by,</if>
+            <if test="createTime != null">create_time,</if>
+            <if test="updateBy != null">update_by,</if>
+            <if test="updateTime != null">update_time,</if>
+            <if test="url != null">url,</if>
+         </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="name != null">#{name},</if>
+            <if test="type != null">#{type},</if>
+            <if test="nums != null">#{nums},</if>
+            <if test="hasNums != null">#{hasNums},</if>
+            <if test="robotId != null">#{robotId},</if>
+            <if test="saying != null">#{saying},</if>
+            <if test="createBy != null">#{createBy},</if>
+            <if test="createTime != null">#{createTime},</if>
+            <if test="updateBy != null">#{updateBy},</if>
+            <if test="updateTime != null">#{updateTime},</if>
+            <if test="url != null">#{url},</if>
+         </trim>
+    </insert>
+
+    <update id="updateProductTypeRobot" parameterType="ProductTypeRobot">
+        update product_type_robot
+        <trim prefix="SET" suffixOverrides=",">
+            <if test="name != null">name = #{name},</if>
+            <if test="type != null">type = #{type},</if>
+            <if test="nums != null">nums = #{nums},</if>
+            <if test="hasNums != null">has_nums = #{hasNums},</if>
+            <if test="robotId != null">robot_id = #{robotId},</if>
+            <if test="saying != null">saying = #{saying},</if>
+            <if test="createBy != null">create_by = #{createBy},</if>
+            <if test="createTime != null">create_time = #{createTime},</if>
+            <if test="updateBy != null">update_by = #{updateBy},</if>
+            <if test="updateTime != null">update_time = #{updateTime},</if>
+            <if test="url != null">url = #{url},</if>
+        </trim>
+        where id = #{id}
+    </update>
+
+    <delete id="deleteProductTypeRobotById" parameterType="Long">
+        delete from product_type_robot where id = #{id}
+    </delete>
+
+    <delete id="deleteProductTypeRobotByIds" parameterType="String">
+        delete from product_type_robot where id in
+        <foreach item="id" collection="array" open="(" separator="," close=")">
+            #{id}
+        </foreach>
+    </delete>
+</mapper>
