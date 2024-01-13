@@ -13,7 +13,7 @@
 
  Date: 28/08/2023 14:51:25
 */
-
+use ruoyi;
 SET NAMES utf8mb4;
 SET FOREIGN_KEY_CHECKS = 0;
 
