@@ -75,7 +75,7 @@ spring:
     # 数据库索引
     database: 7
     # 密码
-    password: ceit2024
+    password: C38Ws#u1
     # 连接超时时间
     timeout: 10s
     lettuce:
