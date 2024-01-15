@@ -9,7 +9,14 @@ create table login_information (
     created datetime not null default current_timestamp comment '创建时间，必填',
     updated datetime default current_timestamp comment '修改时间'
 );
-
+create table dealer_information (
+    id int primary key auto_increment comment '自增uuid',
+    dealer_name varchar(255) unique comment '经销商名称',
+    dealer_address varchar(255) comment '经销商地址',
+    dealer_introduction varchar(255) comment '经销商简介',
+    created datetime not null default current_timestamp comment '创建时间，必填',
+    updated datetime default current_timestamp comment '修改时间'
+);
 create table user_information (
     id int primary key auto_increment comment '自增uuid',
     user_type tinyint not null comment '1.家教 2.家长',
@@ -32,14 +39,7 @@ create table user_information (
     constraint dealer_fk foreign key (affiliated_dealer) references dealer_information(id)
 );
 
-create table dealer_information (
-    id int primary key auto_increment comment '自增uuid',
-    dealer_name varchar(255) unique comment '经销商名称',
-    dealer_address varchar(255) comment '经销商地址',
-    dealer_introduction varchar(255) comment '经销商简介',
-    created datetime not null default current_timestamp comment '创建时间，必填',
-    updated datetime default current_timestamp comment '修改时间'
-);
+
 
 create table dealer_commission (
     id int auto_increment primary key comment '自增uuid',
@@ -57,7 +57,7 @@ create table dealer_commission (
     commission_category tinyint comment '佣金类别，0.经销商佣金 1.家教佣金',
     created datetime not null default current_timestamp comment '创建时间，必填',
     updated datetime default current_timestamp comment '修改时间',
-    constraint dealer_fk foreign key (dealer_id) references dealer_information(id)
+    constraint dealer_fk_2 foreign key (dealer_id) references dealer_information(id)
 );
 
 create table audit_information (
